@@ -12,7 +12,8 @@
       "Bash(source:*)",
       "Bash(lsof:*)",
       "Bash(python:*)",
-      "Bash(uvicorn:*)"
+      "Bash(uvicorn:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
