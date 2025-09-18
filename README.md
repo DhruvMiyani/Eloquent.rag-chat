@@ -1,6 +1,6 @@
 # Banking Chatbot with RAG Implementation
 
-✅ **Auto-deployment configured** - GitHub Actions deploys to AWS on push to main branch.
+✅ **Auto-deployment configured** - GitHub Actions deploys to AWS on push to main branch. (Updated EC2 IP)
 
 
 <img width="725" height="415" alt="Screenshot 2025-09-18 at 11 56 04 AM" src="https://github.com/user-attachments/assets/d84e9f94-e0f2-40a2-82c1-a1ed6df49b30" />
