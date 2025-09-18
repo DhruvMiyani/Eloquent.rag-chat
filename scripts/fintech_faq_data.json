@@ -1,0 +1,189 @@
+{
+  "faqs": [
+    {
+      "category": "Account & Registration",
+      "questions": [
+        {
+          "id": "acc_001",
+          "question": "How do I create a new account?",
+          "answer": "To create a new account, visit our website and click 'Sign Up'. You'll need to provide your email, phone number, and create a secure password. Complete the verification process by confirming your email and phone number through the codes we send."
+        },
+        {
+          "id": "acc_002",
+          "question": "What documents do I need for account verification?",
+          "answer": "For account verification, you'll need: 1) A valid government-issued ID (driver's license, passport, or national ID), 2) Proof of address (utility bill, bank statement, or lease agreement from the last 3 months), and 3) A selfie for identity verification."
+        },
+        {
+          "id": "acc_003",
+          "question": "How long does account verification take?",
+          "answer": "Account verification typically takes 1-3 business days. During peak periods, it may take up to 5 business days. You'll receive email updates throughout the process, and can check your verification status in the app under 'Account Settings'."
+        },
+        {
+          "id": "acc_004",
+          "question": "Can I have multiple accounts?",
+          "answer": "No, each customer is limited to one personal account per email address and phone number. However, you can open separate business accounts if you have registered businesses. Each business account requires separate documentation."
+        },
+        {
+          "id": "acc_005",
+          "question": "How do I close my account?",
+          "answer": "To close your account, ensure all pending transactions are completed and your balance is zero. Then go to Settings > Account > Close Account. You'll need to confirm via email. Note that account closure is permanent and you'll lose access to transaction history after 30 days."
+        },
+        {
+          "id": "acc_006",
+          "question": "Why was my account application rejected?",
+          "answer": "Common reasons for rejection include: incomplete or unclear documentation, information mismatch, being under 18 years old, or residing in an unsupported region. Check your email for specific rejection reasons and instructions on how to reapply."
+        }
+      ]
+    },
+    {
+      "category": "Payments & Transactions",
+      "questions": [
+        {
+          "id": "pay_001",
+          "question": "How do I send money to another user?",
+          "answer": "To send money, tap 'Send' on the home screen, enter the recipient's email, phone number, or username, specify the amount, add an optional note, and confirm with your PIN or biometric authentication. The recipient receives funds instantly if they're an existing user."
+        },
+        {
+          "id": "pay_002",
+          "question": "What are the transaction limits?",
+          "answer": "Daily limits: $5,000 for verified accounts, $1,000 for unverified. Monthly limits: $20,000 for verified, $3,000 for unverified. Single transaction maximum: $3,000. Business accounts have higher limits. Contact support to request limit increases."
+        },
+        {
+          "id": "pay_003",
+          "question": "How long do transfers take?",
+          "answer": "Internal transfers between app users are instant. Bank transfers: Standard ACH takes 3-5 business days (free), Express ACH takes 1-2 business days ($2 fee), Wire transfers complete same day if initiated before 2 PM ET ($25 fee)."
+        },
+        {
+          "id": "pay_004",
+          "question": "Can I cancel a payment?",
+          "answer": "Payments to other app users cannot be cancelled once sent. Bank transfers can be cancelled if still pending (usually within 30 minutes of initiation). Go to Transaction History, find the pending transaction, and tap 'Cancel'. Refunds must be requested from the recipient."
+        },
+        {
+          "id": "pay_005",
+          "question": "What fees do you charge?",
+          "answer": "No fees for: sending to friends, standard bank deposits, receiving money. Fees apply for: instant deposits (1.5%, min $0.25), credit card funding (3%), international transfers (varies by country), ATM withdrawals over 3 per month ($2.50 each)."
+        },
+        {
+          "id": "pay_006",
+          "question": "How do recurring payments work?",
+          "answer": "Set up recurring payments in Settings > Payments > Recurring. Choose frequency (weekly, monthly, etc.), amount, recipient, and end date. You'll receive notifications 24 hours before each payment. Cancel anytime from the same menu."
+        },
+        {
+          "id": "pay_007",
+          "question": "What currencies are supported?",
+          "answer": "We support USD, EUR, GBP, CAD, AUD, and JPY for holding and domestic transfers. International transfers support 50+ currencies with real-time exchange rates. Currency conversion fees are 0.5% above the mid-market rate."
+        }
+      ]
+    },
+    {
+      "category": "Security & Fraud Prevention",
+      "questions": [
+        {
+          "id": "sec_001",
+          "question": "How is my account protected?",
+          "answer": "We use bank-level 256-bit encryption, two-factor authentication, biometric login options, fraud monitoring AI that flags suspicious activities, FDIC insurance up to $250,000, and PCI-DSS compliance for card data protection."
+        },
+        {
+          "id": "sec_002",
+          "question": "What should I do if I suspect fraud?",
+          "answer": "Immediately freeze your card in the app, change your password, review recent transactions and dispute any unauthorized ones, contact our 24/7 fraud hotline at 1-800-XXX-XXXX, and file a fraud report in the app under Security > Report Fraud."
+        },
+        {
+          "id": "sec_003",
+          "question": "How do I enable two-factor authentication?",
+          "answer": "Go to Settings > Security > Two-Factor Authentication. Choose between SMS, authenticator app (recommended), or email. Follow the setup wizard to configure your preferred method. We strongly recommend using an authenticator app for maximum security."
+        },
+        {
+          "id": "sec_004",
+          "question": "What is your fraud liability policy?",
+          "answer": "You're protected against unauthorized transactions with zero liability if reported within 60 days. Report immediately for fastest resolution. We investigate all claims within 10 business days and provide provisional credit during investigation for amounts over $50."
+        },
+        {
+          "id": "sec_005",
+          "question": "How can I recognize phishing attempts?",
+          "answer": "We never ask for passwords, PINs, or full SSN via email or phone. Official emails come from @ourcompany.com only. Check for spelling errors and urgent language. When in doubt, log into the app directly instead of clicking email links."
+        },
+        {
+          "id": "sec_006",
+          "question": "What happens if I lose my phone?",
+          "answer": "Immediately log into your account from another device and remove the lost phone from trusted devices. Change your password and review recent transactions. Enable 'Find My Phone' beforehand for remote lock/wipe capabilities. Contact support if you cannot access your account."
+        }
+      ]
+    },
+    {
+      "category": "Regulations & Compliance",
+      "questions": [
+        {
+          "id": "reg_001",
+          "question": "Are you a licensed financial institution?",
+          "answer": "Yes, we're licensed as a money transmitter in all 50 US states, registered with FinCEN as a Money Services Business, maintain required surety bonds and capital requirements, and undergo regular audits by state and federal regulators."
+        },
+        {
+          "id": "reg_002",
+          "question": "How is my money insured?",
+          "answer": "Customer funds are held in FDIC-insured partner banks, providing coverage up to $250,000 per customer. Funds are kept separate from corporate operating accounts and are available for withdrawal at any time."
+        },
+        {
+          "id": "reg_003",
+          "question": "What information do you report to tax authorities?",
+          "answer": "We report to the IRS: Form 1099-K for business accounts receiving over $600/year, Form 1099-INT for interest earned over $10, and Form 1099-B for cryptocurrency transactions. Personal transfers between friends and family are not reported."
+        },
+        {
+          "id": "reg_004",
+          "question": "Why do you need my SSN/Tax ID?",
+          "answer": "Federal law requires us to collect SSN/Tax ID to: verify identity (USA PATRIOT Act), report certain transactions to IRS, prevent money laundering and fraud, and comply with Know Your Customer (KYC) regulations. This information is encrypted and never shared except as legally required."
+        },
+        {
+          "id": "reg_005",
+          "question": "What are your anti-money laundering policies?",
+          "answer": "We maintain comprehensive AML programs including: transaction monitoring for suspicious patterns, currency transaction reports for transfers over $10,000, suspicious activity reports when required, regular customer verification updates, and blocking sanctioned individuals and countries."
+        },
+        {
+          "id": "reg_006",
+          "question": "How do you handle international compliance?",
+          "answer": "For international transfers, we comply with SWIFT regulations, OFAC sanctions screening, country-specific financial regulations, and anti-bribery and corruption laws. Some countries may have additional restrictions or requirements."
+        }
+      ]
+    },
+    {
+      "category": "Technical Support & Troubleshooting",
+      "questions": [
+        {
+          "id": "tech_001",
+          "question": "The app keeps crashing. What should I do?",
+          "answer": "Try these steps: 1) Update to the latest app version, 2) Clear app cache in your phone settings, 3) Restart your device, 4) Uninstall and reinstall the app, 5) Ensure your OS is updated. If issues persist, contact support with your device model and OS version."
+        },
+        {
+          "id": "tech_002",
+          "question": "I forgot my password. How do I reset it?",
+          "answer": "Click 'Forgot Password' on the login screen. Enter your email or phone number. You'll receive a reset link valid for 1 hour. Create a new password following our security requirements: 8+ characters, one uppercase, one number, and one special character."
+        },
+        {
+          "id": "tech_003",
+          "question": "Why isn't my bank account linking?",
+          "answer": "Common issues include: incorrect login credentials, bank requires additional authentication, bank is temporarily unavailable, or your bank isn't supported. Try manual verification with micro-deposits (takes 1-2 days) or contact support for assistance."
+        },
+        {
+          "id": "tech_004",
+          "question": "How do I update my phone number or email?",
+          "answer": "Go to Settings > Profile > Contact Information. For security, you'll need to verify the new contact method and confirm the change via your existing email/phone. The change takes effect immediately after verification."
+        },
+        {
+          "id": "tech_005",
+          "question": "What browsers do you support?",
+          "answer": "We support the latest versions of Chrome, Firefox, Safari, and Edge. Internet Explorer is not supported. For best experience, enable JavaScript and cookies. Mobile browsers should be updated to the latest version."
+        },
+        {
+          "id": "tech_006",
+          "question": "How do I export my transaction history?",
+          "answer": "Go to Statements > Export History. Select date range (up to 1 year), choose format (PDF, CSV, or OFX), and click 'Generate'. You'll receive an email with a secure download link valid for 7 days. Exports include all transaction details and fees."
+        },
+        {
+          "id": "tech_007",
+          "question": "What do the different transaction statuses mean?",
+          "answer": "Pending: Being processed, Completed: Successfully finished, Failed: Could not complete (funds returned), Reversed: Transaction was undone, On Hold: Requires additional verification, Scheduled: Set for future date."
+        }
+      ]
+    }
+  ]
+}
