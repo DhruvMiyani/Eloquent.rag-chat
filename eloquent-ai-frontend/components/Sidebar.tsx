@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, Search, FileText, Settings, ChevronLeft, Trash2, Edit2 } from 'lucide-react';
+import { Plus, Search, FileText, Settings, Trash2, Edit2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { clsx } from 'clsx';
 import useStore from '@/store/useStore';
@@ -25,9 +25,7 @@ export default function Sidebar() {
     createNewConversation,
     selectConversation,
     deleteConversation,
-    updateConversationTitle,
-    isSidebarOpen,
-    toggleSidebar
+    updateConversationTitle
   } = useStore();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,21 +57,10 @@ export default function Sidebar() {
   };
 
   return (
-    <div
-      className={clsx(
-        'flex flex-col bg-gray-50 border-r border-gray-200 transition-all duration-300',
-        isSidebarOpen ? 'w-80' : 'w-0 overflow-hidden'
-      )}
-    >
+    <div className="w-80 flex flex-col bg-gray-50 border-r border-gray-200">
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-700">Financial Operations</h2>
-          <button
-            onClick={toggleSidebar}
-            className="p-1 hover:bg-gray-200 rounded-lg transition-colors"
-          >
-            <ChevronLeft className="h-5 w-5 text-gray-600" />
-          </button>
         </div>
 
         <button

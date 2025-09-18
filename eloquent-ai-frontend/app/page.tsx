@@ -9,17 +9,7 @@ import useStore from '@/store/useStore';
 export default function Home() {
   const { user, initializeAuth } = useStore();
 
-  // For anonymous users, show simple ChatGPT-style layout without sidebar
-  if (user?.isAnonymous) {
-    return (
-      <div className="h-screen flex flex-col bg-gray-50">
-        <Header />
-        <ChatArea />
-      </div>
-    );
-  }
-
-  // For registered users, show full layout with sidebar
+  // Show full layout with sidebar for all users
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Header />

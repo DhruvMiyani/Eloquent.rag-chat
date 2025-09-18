@@ -238,7 +238,7 @@ export default function ChatArea() {
       </form>
 
       {/* Auth Modal - Show after 20 seconds for anonymous users */}
-      {showAuthModal && user?.type === 'anonymous' && (
+      {showAuthModal && user?.isAnonymous && (
         <AuthModal
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}

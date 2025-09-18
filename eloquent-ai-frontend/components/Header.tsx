@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Menu, User, LogOut, UserPlus } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 import useStore from '@/store/useStore';
 import AuthModal from './AuthModal';
 
 export default function Header() {
-  const { user, logout, toggleSidebar, isSidebarOpen } = useStore();
+  const { user, logout } = useStore();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -14,14 +14,6 @@ export default function Header() {
     <>
       <header className="h-16 border-b border-gray-200 bg-white flex items-center justify-between px-6">
         <div className="flex items-center gap-4">
-          {!isSidebarOpen && (
-            <button
-              onClick={toggleSidebar}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <Menu className="h-5 w-5 text-gray-600" />
-            </button>
-          )}
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold text-gray-900">Eloquent AI</h1>
             <span className="text-gray-500">- Financial Assistant</span>
