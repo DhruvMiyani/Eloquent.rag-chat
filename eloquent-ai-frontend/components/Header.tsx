@@ -34,7 +34,7 @@ export default function Header() {
             <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Careers</a>
           </nav>
 
-          {user ? (
+          {user && !user.isAnonymous ? (
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
@@ -42,24 +42,12 @@ export default function Header() {
               >
                 <User className="h-4 w-4" />
                 <span className="text-sm font-medium">
-                  {user.isAnonymous ? 'Anonymous' : user.name || user.email}
+                  {user.name || user.email}
                 </span>
               </button>
 
               {showUserMenu && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                  {user.isAnonymous && (
-                    <button
-                      onClick={() => {
-                        setShowAuthModal(true);
-                        setShowUserMenu(false);
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 w-full text-left text-sm"
-                    >
-                      <UserPlus className="h-4 w-4" />
-                      Create Account
-                    </button>
-                  )}
                   <button
                     onClick={() => {
                       logout();
@@ -73,7 +61,7 @@ export default function Header() {
                 </div>
               )}
             </div>
-          ) : (
+          ) : !user ? (
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowAuthModal(true)}
@@ -85,7 +73,7 @@ export default function Header() {
                 Request a demo
               </button>
             </div>
-          )}
+          ) : null}
         </div>
       </header>
 

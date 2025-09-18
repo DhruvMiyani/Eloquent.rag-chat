@@ -1,0 +1,19 @@
+🎉 Deployment Information
+
+EC2 Instance:
+- Instance ID: i-030e78a9105ee0fa6
+- Public IP: 3.89.59.19
+- Key Pair: eloquent-keypair-20250918012018.pem
+- Security Group: sg-0f663567aa6995c1c
+
+S3 Bucket:
+- Bucket Name: eloquent-ai-frontend-20250918012018
+- Website URL: http://eloquent-ai-frontend-20250918012018.s3-website-us-east-1.amazonaws.com
+
+Next Steps:
+1. Connect to EC2: ssh -i eloquent-keypair-20250918012018.pem ec2-user@3.89.59.19
+2. Deploy backend on EC2
+3. Build and upload frontend to S3
+4. Update frontend API URL to point to EC2
+
+Estimated Monthly Cost: $0 (within free tier limits)

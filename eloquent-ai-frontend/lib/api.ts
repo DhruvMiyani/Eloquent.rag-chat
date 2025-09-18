@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { User, Conversation, Message } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = 'http://10.0.0.149:8002';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -19,6 +19,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Helper function to transform snake_case to camelCase for user objects
+const transformUser = (user: any) => {
+  if (!user) return user;
+  return {
+    ...user,
+    isAnonymous: user.is_anonymous,
+    createdAt: user.created_at
+  };
+};
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -32,28 +42,43 @@ api.interceptors.response.use(
 
 export const authAPI = {
   async loginAnonymous(): Promise<{ user: User; token: string }> {
+    console.log('API_BASE_URL:', API_BASE_URL);
+    console.log('Making request to:', `${API_BASE_URL}/api/auth/anonymous`);
     const response = await api.post('/api/auth/anonymous');
-    return response.data;
+    console.log('API response:', response.data);
+    return {
+      ...response.data,
+      user: transformUser(response.data.user)
+    };
   },
 
   async loginWithCredentials(email: string, password: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/login', { email, password });
-    return response.data;
+    return {
+      ...response.data,
+      user: transformUser(response.data.user)
+    };
   },
 
   async register(email: string, password: string, name: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/register', { email, password, name });
-    return response.data;
+    return {
+      ...response.data,
+      user: transformUser(response.data.user)
+    };
   },
 
   async getCurrentUser(): Promise<User> {
     const response = await api.get('/api/auth/me');
-    return response.data;
+    return transformUser(response.data);
   },
 
   async convertAnonymousToUser(email: string, password: string, name: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/convert', { email, password, name });
-    return response.data;
+    return {
+      ...response.data,
+      user: transformUser(response.data.user)
+    };
   },
 };
 

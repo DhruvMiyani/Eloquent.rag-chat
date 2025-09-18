@@ -7,20 +7,19 @@ import ChatArea from '@/components/ChatArea';
 import useStore from '@/store/useStore';
 
 export default function Home() {
-  const { user, loginAnonymous, loadConversations } = useStore();
+  const { user, initializeAuth } = useStore();
 
-  useEffect(() => {
-    const initializeApp = async () => {
-      if (!user) {
-        await loginAnonymous();
-      } else {
-        await loadConversations();
-      }
-    };
+  // For anonymous users, show simple ChatGPT-style layout without sidebar
+  if (user?.isAnonymous) {
+    return (
+      <div className="h-screen flex flex-col bg-gray-50">
+        <Header />
+        <ChatArea />
+      </div>
+    );
+  }
 
-    initializeApp();
-  }, []);
-
+  // For registered users, show full layout with sidebar
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Header />

@@ -169,7 +169,7 @@ rag_service = RAGService()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "http://localhost:3000", "http://localhost:3001"],
+    allow_origins=[FRONTEND_URL, "http://localhost:3000", "http://localhost:3001", "http://eloquent-ai-frontend-20250918012018.s3-website-us-east-1.amazonaws.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

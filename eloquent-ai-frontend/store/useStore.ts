@@ -17,6 +17,7 @@ interface AppState {
 
   // Actions
   setUser: (user: User | null, token?: string) => void;
+  initializeAuth: () => Promise<void>;
   loginAnonymous: () => Promise<void>;
   loginWithCredentials: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name: string) => Promise<void>;
@@ -51,11 +52,42 @@ const useStore = create<AppState>((set, get) => ({
         set({ user, token });
       },
 
+      initializeAuth: async () => {
+        try {
+          const existingToken = Cookies.get('token');
+
+          if (existingToken) {
+            console.log('Found existing token, validating user...');
+            // Try to get current user with existing token
+            try {
+              const user = await authAPI.getCurrentUser();
+              console.log('Returning user validated:', user);
+              get().setUser(user, existingToken);
+              await get().loadConversations();
+              return;
+            } catch (error) {
+              console.log('Token invalid, clearing...');
+              Cookies.remove('token');
+            }
+          }
+
+          // No valid token, create new anonymous session
+          console.log('No valid token found, creating new anonymous session...');
+          await get().loginAnonymous();
+        } catch (error) {
+          console.error('Failed to initialize auth:', error);
+        }
+      },
+
       loginAnonymous: async () => {
         try {
+          console.log('Calling authAPI.loginAnonymous...');
           const { user, token } = await authAPI.loginAnonymous();
+          console.log('Got user and token:', { user, token });
           get().setUser(user, token);
+          console.log('Set user in store, loading conversations...');
           await get().loadConversations();
+          console.log('Conversations loaded successfully');
         } catch (error) {
           console.error('Failed to login anonymously:', error);
           throw error;

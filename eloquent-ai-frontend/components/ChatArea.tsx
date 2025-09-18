@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { clsx } from 'clsx';
 import useStore from '@/store/useStore';
 import { SuggestedQuestion } from '@/types';
+import AuthModal from './AuthModal';
 
 const suggestedQuestions: SuggestedQuestion[] = [
   { text: 'How do I reset my password?', category: 'password' },
@@ -21,12 +22,51 @@ export default function ChatArea() {
     isLoading,
     sendMessage,
     user,
-    createNewConversation
+    createNewConversation,
+    initializeAuth
   } = useStore();
 
   const [input, setInput] = useState('');
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [chatStartTime, setChatStartTime] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Initialize authentication (check for existing token or create anonymous session)
+  useEffect(() => {
+    if (!user) {
+      console.log('No user found, initializing auth...');
+      initializeAuth();
+    }
+  }, [user, initializeAuth]);
+
+  // Start chat timer and show auth modal after 20 seconds
+  useEffect(() => {
+    console.log('Timer effect triggered:', {
+      messagesLength: messages.length,
+      chatStartTime,
+      isAnonymous: user?.isAnonymous,
+      userId: user?.id
+    });
+
+    if (messages.length > 0 && !chatStartTime && user?.isAnonymous) {
+      console.log('Starting 20-second timer for anonymous user');
+      setChatStartTime(Date.now());
+
+      const timer = setTimeout(() => {
+        console.log('20-second timer fired, checking if still anonymous:', user?.isAnonymous);
+        if (user?.isAnonymous) {
+          console.log('Showing auth modal');
+          setShowAuthModal(true);
+        }
+      }, 20000); // 20 seconds
+
+      return () => {
+        console.log('Clearing timer');
+        clearTimeout(timer);
+      };
+    }
+  }, [messages.length, chatStartTime, user]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -70,12 +110,13 @@ export default function ChatArea() {
     }
   };
 
+  // Show loading while logging in anonymous user
   if (!user) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome to Eloquent AI</h2>
-          <p className="text-gray-600">Please sign in to start chatting</p>
+          <p className="text-gray-600">Initializing your session...</p>
         </div>
       </div>
     );
@@ -195,6 +236,16 @@ export default function ChatArea() {
           </button>
         </div>
       </form>
+
+      {/* Auth Modal - Show after 20 seconds for anonymous users */}
+      {showAuthModal && user?.type === 'anonymous' && (
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title="Continue your conversation"
+          subtitle="Sign up to save your chat history and continue where you left off."
+        />
+      )}
     </div>
   );
 }
