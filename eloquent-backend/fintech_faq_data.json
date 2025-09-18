@@ -1,0 +1,185 @@
+{
+  "faqs": [
+    {
+      "category": "Account & Registration",
+      "questions": [
+        {
+          "id": "acc_001",
+          "question": "How do I create an account?",
+          "answer": "To create an account, click on the 'Sign Up' button on our homepage. You'll need to provide your email address, create a secure password, and verify your identity with a government-issued ID. The process takes about 5-10 minutes.",
+          "keywords": ["create account", "sign up", "register", "new account", "registration"]
+        },
+        {
+          "id": "acc_002",
+          "question": "What documents do I need to open an account?",
+          "answer": "You'll need: 1) A valid government-issued photo ID (passport, driver's license, or national ID card), 2) Proof of address dated within the last 3 months (utility bill, bank statement, or rental agreement), 3) Your Social Security Number or Tax ID, and 4) A selfie for identity verification.",
+          "keywords": ["documents", "requirements", "ID", "verification", "proof of address", "KYC"]
+        },
+        {
+          "id": "acc_003",
+          "question": "How do I reset my password?",
+          "answer": "To reset your password: 1) Click 'Forgot Password' on the login page, 2) Enter your registered email address, 3) Check your email for a reset link (valid for 1 hour), 4) Click the link and create a new password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.",
+          "keywords": ["reset password", "forgot password", "password recovery", "can't login", "locked out"]
+        },
+        {
+          "id": "acc_004",
+          "question": "How do I verify my account?",
+          "answer": "Account verification happens automatically during signup. We'll ask you to: 1) Upload a clear photo of your ID, 2) Take a selfie for facial recognition, 3) Confirm your phone number via SMS, 4) Verify your email address. Verification typically completes within 24 hours.",
+          "keywords": ["verify account", "verification", "identity verification", "KYC process", "account approval"]
+        },
+        {
+          "id": "acc_005",
+          "question": "Can I have multiple accounts?",
+          "answer": "No, each person can only have one personal account with us. This is for security and regulatory compliance. However, you can have multiple sub-accounts or savings goals within your main account. Business accounts are separate and you can have both personal and business accounts.",
+          "keywords": ["multiple accounts", "second account", "additional account", "business account"]
+        }
+      ]
+    },
+    {
+      "category": "Payments & Transactions",
+      "questions": [
+        {
+          "id": "pay_001",
+          "question": "How do I send money to someone?",
+          "answer": "To send money: 1) Go to 'Transfers' in your dashboard, 2) Enter recipient's email, phone, or account number, 3) Enter the amount and optional note, 4) Review and confirm with your PIN or biometric authentication. Transfers to users on our platform are instant, external transfers take 1-3 business days.",
+          "keywords": ["send money", "transfer", "payment", "pay someone", "wire transfer"]
+        },
+        {
+          "id": "pay_002",
+          "question": "What are the transfer limits?",
+          "answer": "Daily limits: $10,000 for verified accounts, $2,500 for new accounts (first 30 days). Monthly limits: $50,000 for personal accounts, $250,000 for business accounts. Single transaction maximum: $5,000. Limits can be increased by contacting support with additional verification.",
+          "keywords": ["transfer limits", "maximum transfer", "daily limit", "monthly limit", "transaction limit"]
+        },
+        {
+          "id": "pay_003",
+          "question": "How long do transfers take?",
+          "answer": "Transfer times depend on the type: Internal transfers (between our users): Instant. ACH transfers: 1-3 business days. Wire transfers: Same day if initiated before 2 PM EST, otherwise next business day. International transfers: 2-5 business days depending on the destination country.",
+          "keywords": ["transfer time", "how long", "processing time", "transfer speed", "instant transfer"]
+        },
+        {
+          "id": "pay_004",
+          "question": "Can I cancel a transfer?",
+          "answer": "You can cancel pending transfers before they're processed. Go to 'Transaction History', find the pending transfer, and click 'Cancel'. Instant transfers cannot be cancelled once sent. For processed transfers, you'll need to request a reversal by contacting support within 24 hours.",
+          "keywords": ["cancel transfer", "stop payment", "reverse transaction", "cancel payment", "undo transfer"]
+        },
+        {
+          "id": "pay_005",
+          "question": "What fees do you charge for transfers?",
+          "answer": "Our fee structure: Internal transfers: FREE. ACH transfers: FREE. Wire transfers: $25 domestic, $45 international. Instant deposits: 1.5% (min $0.25, max $15). Currency conversion: 1% above market rate. ATM withdrawals: First 5 per month free, then $2.50 each.",
+          "keywords": ["fees", "charges", "cost", "transfer fees", "transaction fees", "pricing"]
+        },
+        {
+          "id": "pay_006",
+          "question": "How do I set up recurring payments?",
+          "answer": "To set up recurring payments: 1) Go to 'Payments' > 'Scheduled & Recurring', 2) Click 'New Recurring Payment', 3) Enter recipient details and amount, 4) Choose frequency (weekly, bi-weekly, monthly, etc.), 5) Set start and end dates, 6) Review and confirm. You can modify or cancel anytime.",
+          "keywords": ["recurring payment", "automatic payment", "scheduled transfer", "autopay", "subscription"]
+        }
+      ]
+    },
+    {
+      "category": "Security & Fraud Prevention",
+      "questions": [
+        {
+          "id": "sec_001",
+          "question": "How do I enable two-factor authentication?",
+          "answer": "To enable 2FA: 1) Go to Settings > Security, 2) Click 'Enable Two-Factor Authentication', 3) Choose your method (SMS, Authenticator app, or Security key), 4) Follow the setup instructions, 5) Save your backup codes securely. We strongly recommend using an authenticator app for maximum security.",
+          "keywords": ["2FA", "two-factor", "authentication", "security", "MFA", "multi-factor"]
+        },
+        {
+          "id": "sec_002",
+          "question": "What should I do if I suspect fraud?",
+          "answer": "If you suspect fraud: 1) Immediately freeze your card in the app, 2) Change your password, 3) Review recent transactions, 4) Contact our fraud hotline at 1-800-XXX-XXXX (24/7), 5) File a dispute for any unauthorized transactions. We have zero liability protection for verified fraud cases.",
+          "keywords": ["fraud", "suspicious activity", "unauthorized transaction", "stolen card", "hacked account", "scam"]
+        },
+        {
+          "id": "sec_003",
+          "question": "How do you protect my data?",
+          "answer": "We use bank-level security: 256-bit AES encryption for data at rest, TLS 1.3 for data in transit, biometric authentication, real-time fraud monitoring, PCI DSS Level 1 compliance, SOC 2 Type II certification, and regular third-party security audits. Your funds are FDIC insured up to $250,000.",
+          "keywords": ["data protection", "encryption", "security measures", "privacy", "FDIC", "data security"]
+        },
+        {
+          "id": "sec_004",
+          "question": "How do I report a lost or stolen card?",
+          "answer": "Report immediately through: 1) App: Cards section > 'Report Lost/Stolen', 2) Phone: Call 1-800-XXX-XXXX (24/7), 3) Website: Login > Cards > Report Issue. We'll instantly block the card, issue a replacement (arrives in 3-5 days), and review recent transactions for fraud.",
+          "keywords": ["lost card", "stolen card", "missing card", "card theft", "replace card"]
+        },
+        {
+          "id": "sec_005",
+          "question": "What is your fraud protection policy?",
+          "answer": "Our comprehensive fraud protection includes: Zero liability for unauthorized transactions reported within 60 days, 24/7 fraud monitoring with AI detection, instant transaction alerts, ability to freeze/unfreeze cards instantly, secure dispute resolution process, and full reimbursement for verified fraud cases within 10 business days.",
+          "keywords": ["fraud protection", "liability", "fraud policy", "unauthorized charges", "dispute process"]
+        }
+      ]
+    },
+    {
+      "category": "Regulations & Compliance",
+      "questions": [
+        {
+          "id": "reg_001",
+          "question": "Are you regulated and licensed?",
+          "answer": "Yes, we are fully regulated. We hold: Money Transmitter Licenses in all 50 US states, FinCEN registration as a Money Services Business (MSB), NMLS ID: XXXXXX, Member of FDIC through our partner banks, compliance with all federal and state banking regulations, and regular audits by regulatory authorities.",
+          "keywords": ["regulated", "licensed", "compliance", "legal", "FDIC", "MSB", "FinCEN"]
+        },
+        {
+          "id": "reg_002",
+          "question": "How is my money insured?",
+          "answer": "Your funds are protected through: FDIC insurance up to $250,000 per depositor through our partner banks, additional private insurance for amounts exceeding FDIC limits, segregated customer accounts, daily reconciliation and auditing, and funds held in custody at top-tier US banks.",
+          "keywords": ["FDIC", "insurance", "deposit insurance", "protection", "fund safety"]
+        },
+        {
+          "id": "reg_003",
+          "question": "What are your KYC requirements?",
+          "answer": "Our Know Your Customer (KYC) process requires: Valid government-issued photo ID, Social Security Number (SSN) or Tax ID, Proof of address, Phone number verification, and for high-value accounts: additional income verification and source of funds documentation. This ensures compliance with anti-money laundering (AML) regulations.",
+          "keywords": ["KYC", "know your customer", "verification requirements", "AML", "identity verification"]
+        },
+        {
+          "id": "reg_004",
+          "question": "Do you report to tax authorities?",
+          "answer": "Yes, as required by law we report: Form 1099-INT for interest earned over $10, Form 1099-MISC for rewards/bonuses over $600, Currency Transaction Reports (CTR) for cash transactions over $10,000, and Suspicious Activity Reports (SAR) when required. You'll receive tax documents by January 31st each year.",
+          "keywords": ["tax reporting", "1099", "IRS", "tax documents", "tax forms"]
+        },
+        {
+          "id": "reg_005",
+          "question": "What is your privacy policy?",
+          "answer": "We never sell your personal data. We only share information: With your explicit consent, As required by law or regulation, With service providers under strict confidentiality agreements, For fraud prevention with industry databases. You can request your data, correct inaccuracies, or delete your account anytime through our privacy portal.",
+          "keywords": ["privacy policy", "data sharing", "personal information", "GDPR", "data rights"]
+        }
+      ]
+    },
+    {
+      "category": "Technical Support & Troubleshooting",
+      "questions": [
+        {
+          "id": "tech_001",
+          "question": "Why can't I log into my account?",
+          "answer": "Common login issues and solutions: 1) Incorrect password - use 'Forgot Password', 2) Account locked after 5 failed attempts - wait 30 minutes or contact support, 3) 2FA issues - use backup codes or contact support, 4) Browser issues - clear cache/cookies or try another browser, 5) Account suspended - check email for details or contact support.",
+          "keywords": ["can't login", "login problem", "access denied", "account locked", "login failed"]
+        },
+        {
+          "id": "tech_002",
+          "question": "The app keeps crashing, what should I do?",
+          "answer": "To fix app crashes: 1) Update to the latest version from App Store/Google Play, 2) Restart your device, 3) Clear app cache (Settings > Apps > Our App > Clear Cache), 4) Ensure you have at least 100MB free storage, 5) Uninstall and reinstall the app, 6) Contact support with your device model and OS version if issues persist.",
+          "keywords": ["app crash", "app not working", "app freezing", "technical problem", "app error"]
+        },
+        {
+          "id": "tech_003",
+          "question": "How do I contact customer support?",
+          "answer": "Multiple support channels available: In-app chat: 24/7 instant support, Phone: 1-800-XXX-XXXX (Mon-Fri 8am-8pm EST), Email: support@ourfintech.com (24-48 hour response), Help Center: help.ourfintech.com for instant answers. Premium accounts get priority support with dedicated account managers.",
+          "keywords": ["contact support", "customer service", "help", "support hours", "get help"]
+        },
+        {
+          "id": "tech_004",
+          "question": "Why is my transaction pending?",
+          "answer": "Transactions may be pending because: 1) Bank processing times (1-3 business days for ACH), 2) Security review for unusual activity, 3) Insufficient funds (will be cancelled), 4) Recipient bank delays, 5) Weekend/holiday processing delays. Most pending transactions clear within 24-72 hours. Contact support if pending over 5 business days.",
+          "keywords": ["pending transaction", "transaction status", "processing", "transaction delayed", "not completed"]
+        },
+        {
+          "id": "tech_005",
+          "question": "How do I update my personal information?",
+          "answer": "To update your information: 1) Go to Settings > Personal Information, 2) Click 'Edit' next to the field you want to update, 3) Enter new information and click 'Save', 4) Some changes (name, SSN) require additional verification, 5) Address changes require proof of new address. Updates typically process within 24 hours.",
+          "keywords": ["update information", "change details", "edit profile", "update address", "change name"]
+        }
+      ]
+    }
+  ]
+}

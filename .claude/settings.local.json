@@ -13,7 +13,9 @@
       "Bash(lsof:*)",
       "Bash(python:*)",
       "Bash(uvicorn:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Read(//var/folders/4h/fxgdbmh173x1z7dbypc6j__40000gn/T/TemporaryItems/NSIRD_screencaptureui_weAbnI/**)"
     ],
     "deny": [],
     "ask": []

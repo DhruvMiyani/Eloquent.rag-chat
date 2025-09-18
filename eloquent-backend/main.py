@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 import openai
 from pinecone import Pinecone
 import logging
+from rag_service import RAGService
 
 # Load environment variables
 load_dotenv()
@@ -162,6 +163,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Initialize RAG service
+rag_service = RAGService()
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -220,40 +224,21 @@ def get_current_user(user_id: str = Depends(verify_token), db: Session = Depends
     return user
 
 # RAG Service
-def get_rag_response(query: str) -> str:
-    """Get response from RAG system."""
+async def get_rag_response(query: str) -> str:
+    """Get response from RAG system using Pinecone and OpenAI."""
     try:
-        # For demo purposes, return a simple response
-        # In production, this would query Pinecone and use OpenAI
+        # Use the RAG service to generate response
+        response_data = await rag_service.generate_rag_response(query)
 
-        # Simulate context retrieval from Pinecone
-        context = """
-        Based on our FAQ database:
-        - To reset your password, click on 'Forgot Password' on the login page
-        - Account opening requires valid ID and proof of address
-        - Two-factor authentication can be enabled in Security Settings
-        - For payment issues, contact support@eloquent.ai
-        """
+        if response_data.get('error'):
+            logger.error(f"RAG service error: {response_data['error']}")
+            return "I apologize, but I'm having trouble processing your request. Please try again later."
 
-        if not OPENAI_API_KEY or OPENAI_API_KEY == "your_openai_api_key_here":
-            # Return demo response when OpenAI is not configured
-            return f"I can help you with that. {context}\n\nFor your specific question: '{query}', please ensure you have configured the OpenAI API key for full functionality."
+        return response_data['response']
 
-        # Use OpenAI to generate response
-        client = openai.OpenAI(api_key=OPENAI_API_KEY)
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": f"You are a helpful financial assistant. Use this context to answer questions: {context}"},
-                {"role": "user", "content": query}
-            ],
-            max_tokens=500
-        )
-
-        return response.choices[0].message.content
     except Exception as e:
         logger.error(f"RAG service error: {e}")
-        return f"I apologize, but I'm having trouble processing your request. Please try again later."
+        return "I apologize, but I'm having trouble processing your request. Please try again later."
 
 # Error response models
 class ErrorDetail(BaseModel):
@@ -291,6 +276,63 @@ def health_check():
         "version": "1.0.0",
         "database": "connected"
     }
+
+@app.post("/api/admin/setup-vector-db")
+async def setup_vector_database():
+    """Initialize the vector database with FAQ data."""
+    try:
+        logger.info("Starting vector database setup...")
+
+        # Setup index
+        index_setup = await rag_service.setup_index()
+        if not index_setup:
+            return {
+                "success": False,
+                "message": "Failed to setup Pinecone index. Check API key and configuration.",
+                "error": "INDEX_SETUP_FAILED"
+            }
+
+        # Index FAQ data
+        faq_file_path = "fintech_faq_data.json"
+        indexing_success = await rag_service.index_faq_data(faq_file_path)
+
+        if indexing_success:
+            stats = await rag_service.get_index_stats()
+            return {
+                "success": True,
+                "message": "Vector database setup completed successfully",
+                "stats": stats
+            }
+        else:
+            return {
+                "success": False,
+                "message": "Failed to index FAQ data",
+                "error": "INDEXING_FAILED"
+            }
+
+    except Exception as e:
+        logger.error(f"Vector database setup error: {e}")
+        return {
+            "success": False,
+            "message": f"Setup failed: {str(e)}",
+            "error": "SETUP_ERROR"
+        }
+
+@app.get("/api/admin/vector-db-stats")
+async def get_vector_database_stats():
+    """Get vector database statistics."""
+    try:
+        stats = await rag_service.get_index_stats()
+        return {
+            "success": True,
+            "stats": stats
+        }
+    except Exception as e:
+        logger.error(f"Failed to get vector DB stats: {e}")
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
 # Authentication endpoints
 @app.post("/api/auth/anonymous", response_model=Token)
@@ -581,7 +623,7 @@ def delete_conversation(
     return {"message": "Conversation deleted successfully"}
 
 @app.post("/api/chat/conversations/{conversation_id}/messages", response_model=Message)
-def send_message(
+async def send_message(
     conversation_id: str,
     message_data: MessageCreate,
     current_user: UserDB = Depends(get_current_user),
@@ -611,7 +653,7 @@ def send_message(
     db.add(user_message)
 
     # Get AI response
-    ai_response = get_rag_response(message_data.content)
+    ai_response = await get_rag_response(message_data.content)
 
     # Save AI response
     assistant_message = MessageDB(
