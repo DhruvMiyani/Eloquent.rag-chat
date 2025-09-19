@@ -1,51 +1,5 @@
 # Eloquent AI Financial Assistant
-
 A production-ready RAG-powered chatbot for fintech customer support, demonstrating enterprise-grade software architecture with intelligent response generation using retrieval-augmented generation.
-
-## Overview
-
-This application combines vector search with large language models to provide accurate, contextual responses about financial services. By grounding AI responses in a curated knowledge base, the system significantly reduces hallucinations while maintaining conversational fluency.
-
-## Architecture
-
-### System Components
-```
-┌─────────────────┐    REST API    ┌─────────────────┐    Vector Search    ┌─────────────────┐
-│  Next.js 14     │◄──────────────►│  FastAPI        │◄──────────────────►│   Pinecone      │
-│  Frontend       │                │  Backend        │                    │  Vector DB      │
-└─────────────────┘                └─────────────────┘                    └─────────────────┘
-                                           │                                        
-                                           ▼                               
-                                   ┌─────────────────┐    
-                                   │  OpenAI API     │    
-                                   │  GPT-4 + Embed  │    
-                                   └─────────────────┘    
-```
-
-### Tech Stack
-
-**Frontend**
-- Next.js 14 with TypeScript
-- Tailwind CSS for styling
-- Zustand for state management
-- Axios for HTTP client
-
-**Backend**
-- FastAPI with Python 3.9+
-- SQLAlchemy ORM with SQLite
-- JWT authentication
-- Async request handling
-
-**AI & Vector Search**
-- OpenAI GPT-4 for response generation
-- OpenAI text-embedding-3-small for embeddings
-- Pinecone for vector similarity search
-- Custom RAG pipeline
-
-**Database**
-- SQLite for development
-- PostgreSQL/DynamoDB for production
-- Conversation and message persistence
 
 ## Quick Start
 
@@ -104,6 +58,56 @@ This application combines vector search with large language models to provide ac
    - Frontend: http://localhost:3001
    - Backend API: http://localhost:8002
    - API Documentation: http://localhost:8002/docs
+
+
+
+
+## Overview
+
+This application combines vector search with large language models to provide accurate, contextual responses about financial services. By grounding AI responses in a curated knowledge base, the system significantly reduces hallucinations while maintaining conversational fluency.
+
+## Architecture
+
+### System Components
+```
+┌─────────────────┐    REST API    ┌─────────────────┐    Vector Search    ┌─────────────────┐
+│  Next.js 14     │◄──────────────►│  FastAPI        │◄──────────────────►│   Pinecone      │
+│  Frontend       │                │  Backend        │                    │  Vector DB      │
+└─────────────────┘                └─────────────────┘                    └─────────────────┘
+                                           │                                        
+                                           ▼                               
+                                   ┌─────────────────┐    
+                                   │  OpenAI API     │    
+                                   │  GPT-4 + Embed  │    
+                                   └─────────────────┘    
+```
+
+### Tech Stack
+
+**Frontend**
+- Next.js 14 with TypeScript
+- Tailwind CSS for styling
+- Zustand for state management
+- Axios for HTTP client
+
+**Backend**
+- FastAPI with Python 3.9+
+- SQLAlchemy ORM with SQLite
+- JWT authentication
+- Async request handling
+
+**AI & Vector Search**
+- OpenAI GPT-4 for response generation
+- OpenAI text-embedding-3-small for embeddings
+- Pinecone for vector similarity search
+- Custom RAG pipeline
+
+**Database**
+- SQLite for development
+- PostgreSQL/DynamoDB for production
+- Conversation and message persistence
+
+
 
 ## Features
 
