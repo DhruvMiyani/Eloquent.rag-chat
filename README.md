@@ -1,5 +1,41 @@
 # Banking Chatbot with RAG Implementation
 
+## Local development
+
+  1. Step-by-Step Setup
+
+  - Clone & Navigate: Clear git clone instructions
+  - Backend Setup: Python virtual environment, dependencies, .env configuration
+  - Frontend Setup: Node.js dependencies and local environment
+  - Database: Automatic SQLite initialization
+  - Server Startup: Clear terminal commands for both services
+
+  2. Configuration Details
+
+  - Environment Variables: Complete .env file examples for both backend and frontend
+  - API Keys: Required OpenAI and Pinecone configuration
+  - Ports: Backend (8001), Frontend (auto-detects to 3002)
+
+  3. Development Workflow
+
+  - Daily Routine: Step-by-step process for starting development
+  - Making Changes: Backend auto-reload, frontend hot-reload
+  - Database Management: SQLite file location and reset instructions
+  - Development Tools: API docs, browser DevTools, backend logs
+
+  4. Code Structure
+
+  - Backend Files: main.py, rag_service.py, requirements.txt, .env
+  - Frontend Files: app/, components/, lib/, store/, types/
+
+  5. Troubleshooting
+
+  - Port Conflicts: Docker using 8000, auto-detection
+  - Common Issues: API keys, virtual environment, CORS, JWT
+  - Testing Commands: curl examples for JWT endpoints
+
+
+
 ✅ **Auto-deployment configured** - GitHub Actions deploys to AWS on push to main branch. (Updated EC2 IP)
 
 
