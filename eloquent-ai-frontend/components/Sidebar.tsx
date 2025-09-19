@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, Search, FileText, Settings, Trash2, Edit2 } from 'lucide-react';
+import { Plus, Search, Settings, Trash2, Edit2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { clsx } from 'clsx';
 import useStore from '@/store/useStore';
@@ -52,7 +52,13 @@ export default function Sidebar() {
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (window.confirm('Are you sure you want to delete this conversation?')) {
-      await deleteConversation(id);
+      try {
+        await deleteConversation(id);
+      } catch (error) {
+        // If backend doesn't support delete, remove it from local state only
+        console.error('Delete not supported by backend, removing from local state');
+        // The store's deleteConversation will handle local removal
+      }
     }
   };
 
@@ -78,7 +84,7 @@ export default function Sidebar() {
             placeholder="Search conversations..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -110,6 +116,7 @@ export default function Sidebar() {
                       handleSaveEdit(conv.id);
                     } else if (e.key === 'Escape') {
                       setEditingId(null);
+                      setEditTitle('');
                     }
                   }}
                   onClick={(e) => e.stopPropagation()}
@@ -119,8 +126,14 @@ export default function Sidebar() {
               ) : (
                 <>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{conv.title}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className={clsx(
+                      "font-medium text-sm truncate",
+                      currentConversation?.id === conv.id ? "text-purple-900" : "text-gray-900"
+                    )}>{conv.title}</p>
+                    <p className={clsx(
+                      "text-xs",
+                      currentConversation?.id === conv.id ? "text-purple-700" : "text-gray-600"
+                    )}>
                       {formatDate(conv.updatedAt)}
                     </p>
                   </div>
@@ -132,7 +145,7 @@ export default function Sidebar() {
                       }}
                       className="p-1 hover:bg-gray-200 rounded"
                     >
-                      <Edit2 className="h-3 w-3 text-gray-600" />
+                      <Edit2 className="h-3 w-3 text-gray-700" />
                     </button>
                     <button
                       onClick={(e) => handleDelete(conv.id, e)}
@@ -145,30 +158,6 @@ export default function Sidebar() {
               )}
             </div>
           ))}
-        </div>
-
-        <div className="mt-8 space-y-1">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-            Knowledge Base
-          </h3>
-          <div className="space-y-1">
-            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <FileText className="h-4 w-4 text-gray-600" />
-              <div className="flex-1">
-                <p className="text-sm font-medium">Annual Financial Report 2024.pdf</p>
-                <p className="text-xs text-gray-500">1d ago</p>
-              </div>
-              <span className="text-xs text-gray-400 uppercase">PDF</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer">
-              <FileText className="h-4 w-4 text-gray-600" />
-              <div className="flex-1">
-                <p className="text-sm font-medium">Market Research Q3.pdf</p>
-                <p className="text-xs text-gray-500">2d ago</p>
-              </div>
-              <span className="text-xs text-gray-400 uppercase">PDF</span>
-            </div>
-          </div>
         </div>
       </div>
 

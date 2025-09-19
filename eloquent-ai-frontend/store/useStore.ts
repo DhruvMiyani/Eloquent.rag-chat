@@ -164,14 +164,17 @@ const useStore = create<AppState>((set, get) => ({
       deleteConversation: async (conversationId) => {
         try {
           await chatAPI.deleteConversation(conversationId);
-          set((state) => ({
-            conversations: state.conversations.filter((c) => c.id !== conversationId),
-            currentConversation: state.currentConversation?.id === conversationId ? null : state.currentConversation,
-            messages: state.currentConversation?.id === conversationId ? [] : state.messages
-          }));
         } catch (error) {
-          console.error('Failed to delete conversation:', error);
+          console.error('Backend delete failed, removing from local state:', error);
+          // Continue with local deletion even if backend fails
         }
+
+        // Always remove from local state (whether backend succeeds or fails)
+        set((state) => ({
+          conversations: state.conversations.filter((c) => c.id !== conversationId),
+          currentConversation: state.currentConversation?.id === conversationId ? null : state.currentConversation,
+          messages: state.currentConversation?.id === conversationId ? [] : state.messages
+        }));
       },
 
       sendMessage: async (content) => {
@@ -222,8 +225,26 @@ const useStore = create<AppState>((set, get) => ({
       },
 
       updateConversationTitle: async (conversationId, title) => {
+        let updatedConversation = null;
+
         try {
-          const updatedConversation = await chatAPI.updateConversationTitle(conversationId, title);
+          updatedConversation = await chatAPI.updateConversationTitle(conversationId, title);
+        } catch (error) {
+          console.error('Backend update failed, updating locally:', error);
+          // If backend fails, create the updated conversation object locally
+          const state = get();
+          const existingConv = state.conversations.find(c => c.id === conversationId);
+          if (existingConv) {
+            updatedConversation = {
+              ...existingConv,
+              title: title,
+              updatedAt: new Date().toISOString()
+            };
+          }
+        }
+
+        // Always update local state (whether backend succeeds or fails)
+        if (updatedConversation) {
           set((state) => ({
             conversations: state.conversations.map((c) =>
               c.id === conversationId ? updatedConversation : c
@@ -232,8 +253,6 @@ const useStore = create<AppState>((set, get) => ({
               ? updatedConversation
               : state.currentConversation
           }));
-        } catch (error) {
-          console.error('Failed to update conversation title:', error);
         }
       }
 }));

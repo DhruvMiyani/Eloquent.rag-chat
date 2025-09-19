@@ -169,13 +169,13 @@ export default function ChatArea() {
                   )}
                 >
                   {message.role === 'assistant' ? (
-                    <div className="prose prose-sm max-w-none text-black">
+                    <div className="prose prose-sm max-w-none text-gray-900">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {message.content}
                       </ReactMarkdown>
                     </div>
                   ) : (
-                    <p className="text-sm text-black">{message.content}</p>
+                    <p className="text-sm text-gray-900">{message.content}</p>
                   )}
                 </div>
                 {message.role === 'user' && (
@@ -219,7 +219,7 @@ export default function ChatArea() {
               }
             }}
             placeholder="Ask about accounts, payments, security, or any banking topic..."
-            className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 pr-12 text-black focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 pr-12 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             rows={1}
           />
           <button
