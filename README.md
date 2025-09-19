@@ -353,45 +353,6 @@ cd eloquent-backend
 - **Logging**: Structured logging for debugging
 - **Documentation**: Extensive inline documentation
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🎯 Next Steps (V2 Features)
-
-- [ ] Real-time WebSocket updates
-- [ ] File upload and processing
-- [ ] Advanced analytics dashboard
-- [ ] Multi-language support
-- [ ] Voice input/output
-- [ ] Advanced admin panel
-- [ ] Rate limiting per user/IP
-- [ ] Comprehensive test suite
-- [ ] CI/CD pipeline
-- [ ] Docker containerization
-
----
-
-**🎉 Ready for Production!**
-
-This implementation demonstrates enterprise-grade software engineering practices with a production-ready RAG chatbot system. The modular architecture, comprehensive error handling, and scalable design make it suitable for immediate deployment and future expansion.
-
-## Features
-
-- **RAG-powered responses**: Retrieves relevant context from Pinecone vector database before generating answers
-- **Chat persistence**: Stores conversation history with support for both SQLite and DynamoDB
-- **User management**: Supports both anonymous and returning users with device-based identification
-- **Modern UI**: Clean, ChatGPT-inspired interface built with Next.js and TypeScript
-- **Production-ready**: Designed for AWS deployment with scalability in mind
-
 ## Tech Stack
 
 ### Backend
