@@ -7,7 +7,31 @@ UNIQUE_ID="20250918012018"
 KEY_NAME="eloquent-keypair-$UNIQUE_ID"
 SECURITY_GROUP_ID="sg-0f663567aa6995c1c"
 
+# Source environment variables from local .env file
+if [ -f "eloquent-backend/.env" ]; then
+    echo "📄 Loading environment variables from eloquent-backend/.env"
+    source eloquent-backend/.env
+elif [ -f "api/.env" ]; then
+    echo "📄 Loading environment variables from api/.env"
+    source api/.env
+else
+    echo "❌ Error: No .env file found. Please create eloquent-backend/.env or api/.env with required environment variables."
+    exit 1
+fi
+
+# Validate required environment variables
+if [ -z "$OPENAI_API_KEY" ]; then
+    echo "❌ Error: OPENAI_API_KEY not found in .env file"
+    exit 1
+fi
+
+if [ -z "$PINECONE_API_KEY" ]; then
+    echo "❌ Error: PINECONE_API_KEY not found in .env file"
+    exit 1
+fi
+
 echo "🚀 Deploying backend to AWS with environment variables..."
+echo "🔑 Using OpenAI API Key ending with: ${OPENAI_API_KEY: -10}"
 
 # Create user data script with environment variables
 cat > /tmp/user-data.sh << 'EOF'
@@ -20,17 +44,17 @@ cd /home/ec2-user
 git clone https://github.com/yourusername/eloquent-backend.git eloquent-backend || echo "Repository already exists"
 cd eloquent-backend
 
-# Create environment file with all required variables
-cat > .env << 'ENVEOF'
+# Create environment file with variables from local .env
+cat > .env << ENVEOF
 # OpenAI Configuration
-OPENAI_API_KEY="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"
-OPENAI_MODEL=gpt-4o-mini
-EMBEDDING_MODEL=text-embedding-3-small
+OPENAI_API_KEY="$OPENAI_API_KEY"
+OPENAI_MODEL=\${OPENAI_MODEL:-gpt-4o-mini}
+EMBEDDING_MODEL=\${EMBEDDING_MODEL:-text-embedding-3-small}
 
 # Pinecone Configuration
-PINECONE_API_KEY=pcsk_64LjaD_JwmDMGeVYu87sqbA6u6zt2HyPXRvfyp9sa3PNyFnFxnR5oipFqY6rUF3xw2nqiM
-PINECONE_INDEX=ai-powered-chatbot-challenge
-PINECONE_ENDPOINT=https://ai-powered-chatbot-challenge-5g2nluv.svc.aped-4627-b74a.pinecone.io
+PINECONE_API_KEY=$PINECONE_API_KEY
+PINECONE_INDEX=\${PINECONE_INDEX:-ai-powered-chatbot-challenge}
+PINECONE_ENDPOINT=\${PINECONE_ENDPOINT:-https://ai-powered-chatbot-challenge-5g2nluv.svc.aped-4627-b74a.pinecone.io}
 
 # Database Configuration
 DATABASE_URL=sqlite:///./chat_database.db
@@ -41,7 +65,7 @@ AWS_REGION=us-east-1
 DYNAMODB_TABLE_PREFIX=chatbot
 
 # Security
-SECRET_KEY=eloquent-ai-secret-key-for-development-only-change-in-production
+SECRET_KEY=\${SECRET_KEY:-eloquent-ai-secret-key-for-development-only-change-in-production}
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
 

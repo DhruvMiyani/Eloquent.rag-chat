@@ -57,21 +57,11 @@ const useStore = create<AppState>((set, get) => ({
           const existingToken = Cookies.get('token');
 
           if (existingToken) {
-            console.log('Found existing token, validating user...');
-            // Try to get current user with existing token
-            try {
-              const user = await authAPI.getCurrentUser();
-              console.log('Returning user validated:', user);
-              get().setUser(user, existingToken);
-              await get().loadConversations();
-              return;
-            } catch (error) {
-              console.log('Token invalid, clearing...');
-              Cookies.remove('token');
-            }
+            console.log('Found existing token, clearing old token...');
+            Cookies.remove('token');
           }
 
-          // No valid token, create new anonymous session
+          // Create new anonymous session
           console.log('No valid token found, creating new anonymous session...');
           await get().loginAnonymous();
         } catch (error) {

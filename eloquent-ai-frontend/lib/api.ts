@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { User, Conversation, Message } from '@/types';
 
-const API_BASE_URL = 'http://10.0.0.149:8002';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://52.91.192.0';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -47,68 +47,70 @@ export const authAPI = {
     const response = await api.post('/api/auth/anonymous');
     console.log('API response:', response.data);
     return {
-      ...response.data,
-      user: transformUser(response.data.user)
+      user: transformUser(response.data.user),
+      token: response.data.access_token
     };
   },
 
   async loginWithCredentials(email: string, password: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/login', { email, password });
     return {
-      ...response.data,
-      user: transformUser(response.data.user)
+      user: transformUser(response.data.user),
+      token: response.data.access_token
     };
   },
 
   async register(email: string, password: string, name: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/register', { email, password, name });
     return {
-      ...response.data,
-      user: transformUser(response.data.user)
+      user: transformUser(response.data.user),
+      token: response.data.access_token
     };
   },
 
   async getCurrentUser(): Promise<User> {
-    const response = await api.get('/api/auth/me');
-    return transformUser(response.data);
+    // No endpoint for getting current user - we'll just validate the token
+    throw new Error('getCurrentUser not implemented');
   },
 
   async convertAnonymousToUser(email: string, password: string, name: string): Promise<{ user: User; token: string }> {
     const response = await api.post('/api/auth/convert', { email, password, name });
     return {
-      ...response.data,
-      user: transformUser(response.data.user)
+      user: transformUser(response.data.user),
+      token: response.data.access_token
     };
   },
 };
 
 export const chatAPI = {
   async sendMessage(conversationId: string, content: string): Promise<Message> {
-    const response = await api.post(`/api/chat/conversations/${conversationId}/messages`, { content });
-    return response.data;
+    const response = await api.post(`/api/conversations/${conversationId}/messages`, { content });
+    // Backend returns { user_message: {...}, ai_message: {...} }
+    // We return the ai_message since the user_message is already in the UI
+    return response.data.ai_message;
   },
 
   async getConversations(): Promise<Conversation[]> {
-    const response = await api.get('/api/chat/conversations');
+    const response = await api.get('/api/conversations');
     return response.data;
   },
 
   async getConversation(id: string): Promise<Conversation> {
-    const response = await api.get(`/api/chat/conversations/${id}`);
+    const response = await api.get(`/api/conversations/${id}`);
     return response.data;
   },
 
   async createConversation(title?: string): Promise<Conversation> {
-    const response = await api.post('/api/chat/conversations', { title });
+    const response = await api.post('/api/conversations', { title });
     return response.data;
   },
 
   async deleteConversation(id: string): Promise<void> {
-    await api.delete(`/api/chat/conversations/${id}`);
+    await api.delete(`/api/conversations/${id}`);
   },
 
   async updateConversationTitle(id: string, title: string): Promise<Conversation> {
-    const response = await api.patch(`/api/chat/conversations/${id}`, { title });
+    const response = await api.patch(`/api/conversations/${id}`, { title });
     return response.data;
   },
 };
