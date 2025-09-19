@@ -15,11 +15,15 @@ from jose import JWTError, jwt
 import uuid
 import os
 import secrets
+import json
 from dotenv import load_dotenv
 import openai
 from pinecone import Pinecone
 import logging
 from rag_service import RAGService
+from ums_enhanced.journey_service import UserJourneyService
+from ums_enhanced.fingerprint_utils import generate_enhanced_fingerprint
+from ums_enhanced.enums import UserType, UserJourneyStage, RecognitionMethod
 
 # Load environment variables
 load_dotenv()
@@ -79,6 +83,7 @@ class UserDB(Base):
     hashed_password = Column(String, nullable=True)
     is_anonymous = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+
 
     conversations = relationship("ConversationDB", back_populates="user", cascade="all, delete-orphan")
 
@@ -156,6 +161,39 @@ class ConversationUpdate(BaseModel):
 class MessageCreate(BaseModel):
     content: str
 
+# UMS Enhanced request models
+class FingerprintData(BaseModel):
+    user_agent: Optional[str] = None
+    screen_resolution: Optional[List[int]] = None
+    timezone: Optional[str] = None
+    language: Optional[str] = None
+    canvas: Optional[str] = None
+    webgl: Optional[Dict] = None
+    fonts: Optional[List[str]] = None
+    device_memory: Optional[int] = None
+    hardware_concurrency: Optional[int] = None
+
+class AnonymousAuthRequest(BaseModel):
+    device_id: Optional[str] = None
+    fingerprint_data: Optional[FingerprintData] = None
+    user_agent: Optional[str] = None
+    ip_address: Optional[str] = None
+
+class EnhancedUser(BaseModel):
+    id: str
+    email: Optional[str] = None
+    name: Optional[str] = None
+    is_anonymous: bool
+    created_at: Optional[datetime] = None
+    user_type: Optional[str] = None
+    journey_stage: Optional[str] = None
+    recognition_method: Optional[str] = None
+    is_returning: Optional[bool] = None
+
+class EnhancedToken(BaseModel):
+    user: EnhancedUser
+    token: str
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Eloquent AI Financial Assistant API",
@@ -165,6 +203,10 @@ app = FastAPI(
 
 # Initialize RAG service
 rag_service = RAGService()
+
+# Initialize UMS Enhanced service
+def get_journey_service(db: Session):
+    return UserJourneyService(db)
 
 # Configure CORS
 app.add_middleware(
@@ -336,8 +378,12 @@ async def get_vector_database_stats():
 
 # Authentication endpoints
 @app.post("/api/auth/anonymous", response_model=Token)
-def create_anonymous_user(db: Session = Depends(get_db)):
-    """Create an anonymous user session."""
+def create_anonymous_user(
+    request: AnonymousAuthRequest = AnonymousAuthRequest(),
+    db: Session = Depends(get_db)
+):
+    """Create an anonymous user session with UMS Enhanced features."""
+    # For now, create a simple anonymous user - we'll enhance this once the database schema is updated
     user = UserDB(
         id=str(uuid.uuid4()),
         is_anonymous=True,
