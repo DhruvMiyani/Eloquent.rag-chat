@@ -1,739 +1,306 @@
-# Banking Chatbot with RAG Implementation
+# Eloquent AI Financial Assistant
 
-## Local development
+A production-ready RAG-powered chatbot for fintech customer support, demonstrating enterprise-grade software architecture with intelligent response generation using retrieval-augmented generation.
 
-  1. Step-by-Step Setup
+## Overview
 
-  - Clone & Navigate: Clear git clone instructions
-  - Backend Setup: Python virtual environment, dependencies, .env configuration
-  - Frontend Setup: Node.js dependencies and local environment
-  - Database: Automatic SQLite initialization
-  - Server Startup: Clear terminal commands for both services
+This application combines vector search with large language models to provide accurate, contextual responses about financial services. By grounding AI responses in a curated knowledge base, the system significantly reduces hallucinations while maintaining conversational fluency.
 
-  2. Configuration Details
+## Architecture
 
-  - Environment Variables: Complete .env file examples for both backend and frontend
-  - API Keys: Required OpenAI and Pinecone configuration
-  - Ports: Backend (8001), Frontend (auto-detects to 3002)
-
-  3. Development Workflow
-
-  - Daily Routine: Step-by-step process for starting development
-  - Making Changes: Backend auto-reload, frontend hot-reload
-  - Database Management: SQLite file location and reset instructions
-  - Development Tools: API docs, browser DevTools, backend logs
-
-  4. Code Structure
-
-  - Backend Files: main.py, rag_service.py, requirements.txt, .env
-  - Frontend Files: app/, components/, lib/, store/, types/
-
-  5. Troubleshooting
-
-  - Port Conflicts: Docker using 8000, auto-detection
-  - Common Issues: API keys, virtual environment, CORS, JWT
-  - Testing Commands: curl examples for JWT endpoints
-
-
-
-✅ **Auto-deployment configured** - GitHub Actions deploys to AWS on push to main branch. (Updated EC2 IP)
-
-
-<img width="725" height="415" alt="Screenshot 2025-09-18 at 11 56 04 AM" src="https://github.com/user-attachments/assets/d84e9f94-e0f2-40a2-82c1-a1ed6df49b30" />
-
-
-
-
-A production-ready full-stack web application featuring an AI-powered chatbot with Retrieval-Augmented Generation (RAG) for fintech FAQ support.
-
-## 🎯 Project Overview
-
-This application demonstrates a complete RAG implementation for a fintech company's customer support chatbot. The system retrieves relevant information from a comprehensive FAQ knowledge base before generating AI responses, significantly reducing hallucinations and improving answer accuracy.
-
-### Key Features
-
-- **💬 ChatGPT-style UI** - Clean, intuitive chat interface
-- **🧠 RAG Implementation** - Pinecone vector database + OpenAI embeddings
-- **🔐 Authentication** - Anonymous and registered user support
-- **💾 Chat Persistence** - Complete conversation history
-- **📱 Responsive Design** - Mobile-friendly interface
-- **🏗️ Modular Architecture** - Separate frontend and backend modules
-- **🚀 Production Ready** - Comprehensive error handling and security
-
-## 🏗️ Architecture
-
+### System Components
 ```
-📦 Project Structure
-├── eloquent-ai-frontend/          # Next.js 14 + TypeScript
-│   ├── components/               # React components
-│   ├── lib/                     # API client & utilities
-│   ├── store/                   # Zustand state management
-│   └── app/                     # Next.js app router
-├── eloquent-backend/             # FastAPI + Python
-│   ├── main.py                  # FastAPI application
-│   ├── rag_service.py           # RAG implementation
-│   ├── setup_vector_db.py       # Database initialization
-│   └── fintech_faq_data.json    # Knowledge base
-└── README.md
+┌─────────────────┐    REST API    ┌─────────────────┐    Vector Search    ┌─────────────────┐
+│  Next.js 14     │◄──────────────►│  FastAPI        │◄──────────────────►│   Pinecone      │
+│  Frontend       │                │  Backend        │                    │  Vector DB      │
+└─────────────────┘                └─────────────────┘                    └─────────────────┘
+                                           │                                        
+                                           ▼                               
+                                   ┌─────────────────┐    
+                                   │  OpenAI API     │    
+                                   │  GPT-4 + Embed  │    
+                                   └─────────────────┘    
 ```
 
-## 🚀 Quick Start
+### Tech Stack
+
+**Frontend**
+- Next.js 14 with TypeScript
+- Tailwind CSS for styling
+- Zustand for state management
+- Axios for HTTP client
+
+**Backend**
+- FastAPI with Python 3.9+
+- SQLAlchemy ORM with SQLite
+- JWT authentication
+- Async request handling
+
+**AI & Vector Search**
+- OpenAI GPT-4 for response generation
+- OpenAI text-embedding-3-small for embeddings
+- Pinecone for vector similarity search
+- Custom RAG pipeline
+
+**Database**
+- SQLite for development
+- PostgreSQL/DynamoDB for production
+- Conversation and message persistence
+
+## Quick Start
 
 ### Prerequisites
+- Python 3.9+
+- Node.js 18+
+- OpenAI API key
+- Pinecone API key
 
-- **Node.js** 18+ and npm/yarn
-- **Python** 3.9+
-- **OpenAI API Key** (for AI responses)
-- **Pinecone API Key** (for vector search)
+### Local Development
 
-### 1. Backend Setup
+1. **Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd eloquent-ai-chatbot
+   ```
 
-```bash
-# Navigate to backend directory
-cd eloquent-backend
+2. **Backend Setup**
+   ```bash
+   cd eloquent-backend
+   python3 -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   
+   # Configure environment
+   cp .env.example .env
+   # Add your API keys to .env file
+   ```
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+3. **Frontend Setup**
+   ```bash
+   cd eloquent-ai-frontend
+   npm install
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
+4. **Initialize Vector Database**
+   ```bash
+   cd eloquent-backend
+   source venv/bin/activate
+   python setup_vector_db.py
+   ```
 
-# Configure environment variables
-cp .env.example .env
-# Edit .env file with your API keys:
-# OPENAI_API_KEY=your_openai_api_key_here
-# PINECONE_API_KEY=your_pinecone_api_key_here
+5. **Start Services**
+   ```bash
+   # Terminal 1: Backend
+   cd eloquent-backend
+   source venv/bin/activate
+   uvicorn main:app --reload --host 0.0.0.0 --port 8002
+   
+   # Terminal 2: Frontend
+   cd eloquent-ai-frontend
+   npm run dev
+   ```
+
+6. **Access Application**
+   - Frontend: http://localhost:3001
+   - Backend API: http://localhost:8002
+   - API Documentation: http://localhost:8002/docs
+
+## Features
+
+### Core Functionality
+- **RAG-Powered Responses**: Retrieves relevant context from vector database before generating answers
+- **Real-time Chat Interface**: ChatGPT-style UI with message history
+- **User Authentication**: Anonymous and registered user support
+- **Conversation Management**: Create, view, edit, and delete chat sessions
+- **Mobile Responsive**: Optimized for all device sizes
+
+### Knowledge Base
+Comprehensive fintech FAQ database covering:
+- Account creation and verification
+- Payments and transactions
+- Security and fraud prevention
+- Regulations and compliance
+- Technical support
+
+### RAG Implementation
+1. **Query Processing**: Convert user input to embeddings
+2. **Vector Search**: Find similar content in Pinecone database
+3. **Context Retrieval**: Extract top-k relevant FAQ entries
+4. **Response Generation**: Use OpenAI GPT-4 with retrieved context
+5. **Fallback Handling**: Graceful degradation when services unavailable
+
+## API Documentation
+
+### Authentication Endpoints
+```
+POST /api/auth/anonymous     # Create anonymous session
+POST /api/auth/register      # Register new user
+POST /api/auth/login         # User login
+POST /api/auth/convert       # Convert anonymous to registered
+GET  /api/auth/me           # Get current user info
 ```
 
-### 2. Frontend Setup
-
-```bash
-# Navigate to frontend directory
-cd eloquent-ai-frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+### Chat Endpoints
+```
+GET    /api/chat/conversations              # List conversations
+POST   /api/chat/conversations              # Create conversation
+GET    /api/chat/conversations/{id}         # Get conversation with messages
+PATCH  /api/chat/conversations/{id}         # Update conversation title
+DELETE /api/chat/conversations/{id}         # Delete conversation
+POST   /api/chat/conversations/{id}/messages # Send message
 ```
 
-### 3. Initialize Vector Database
-
-```bash
-# In the backend directory
-cd eloquent-backend
-source venv/bin/activate
-
-# Run the setup script to populate Pinecone
-python setup_vector_db.py
+### Admin Endpoints
+```
+POST /api/admin/setup-vector-db    # Initialize vector database
+GET  /api/admin/vector-db-stats    # Get database statistics
 ```
 
-### 4. Start Both Services
+## Configuration
 
+### Required Environment Variables
 ```bash
-# Terminal 1: Backend (from eloquent-backend/)
-source venv/bin/activate
-uvicorn main:app --reload --host 0.0.0.0 --port 8002
-
-# Terminal 2: Frontend (from eloquent-ai-frontend/)
-npm run dev
-```
-
-### 5. Access the Application
-
-- **Frontend**: http://localhost:3001
-- **Backend API**: http://localhost:8002
-- **API Documentation**: http://localhost:8002/docs
-
-## 📊 Knowledge Base
-
-The system includes a comprehensive fintech FAQ database with 25+ questions across 5 categories:
-
-1. **Account & Registration** - Account creation, verification, passwords
-2. **Payments & Transactions** - Money transfers, limits, fees
-3. **Security & Fraud Prevention** - 2FA, fraud reporting, data protection
-4. **Regulations & Compliance** - Licensing, insurance, tax reporting
-5. **Technical Support** - Login issues, app problems, troubleshooting
-
-## 🧠 RAG Implementation Details
-
-### Vector Database (Pinecone)
-- **Embedding Model**: OpenAI text-embedding-ada-002
-- **Vector Dimensions**: 1536
-- **Similarity Metric**: Cosine similarity
-- **Index Type**: Pod-based (p1.x1)
-
-### Response Generation
-1. **Query Processing**: User question is converted to embeddings
-2. **Similarity Search**: Top 3 most relevant FAQs retrieved
-3. **Context Assembly**: Retrieved content formatted for AI prompt
-4. **Response Generation**: OpenAI GPT-3.5-turbo generates contextual response
-5. **Fallback Handling**: Graceful degradation when services are unavailable
-
-### Example RAG Flow
-
-```python
-# User asks: "How do I reset my password?"
-# 1. Convert to embeddings
-# 2. Search Pinecone for similar questions
-# 3. Retrieve top matches:
-#    - "How do I reset my password?" (score: 0.98)
-#    - "What should I do if I can't login?" (score: 0.85)
-# 4. Generate AI response using retrieved context
-```
-
-## 🔐 Authentication System
-
-### Anonymous Users
-- Instant access without registration
-- Temporary session with UUID
-- Limited conversation history (session-based)
-
-### Registered Users
-- JWT-based authentication
-- Persistent conversation history
-- Enhanced security features
-- Account management capabilities
-
-## 🛠️ API Endpoints
-
-### Authentication
-- `POST /api/auth/anonymous` - Create anonymous session
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-
-### Chat Management
-- `GET /api/chat/conversations` - List conversations
-- `POST /api/chat/conversations` - Create new conversation
-- `GET /api/chat/conversations/{id}` - Get conversation details
-- `POST /api/chat/conversations/{id}/messages` - Send message
-- `DELETE /api/chat/conversations/{id}` - Delete conversation
-
-### Admin/Setup
-- `POST /api/admin/setup-vector-db` - Initialize vector database
-- `GET /api/admin/vector-db-stats` - Get database statistics
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```bash
-# Required for full functionality
+# Backend (.env)
 OPENAI_API_KEY=your_openai_api_key_here
 PINECONE_API_KEY=your_pinecone_api_key_here
-
-# Optional configuration
-PINECONE_ENVIRONMENT=us-east-1
-SECRET_KEY=your_secret_key_here
+PINECONE_INDEX=ai-powered-chatbot-challenge
+SECRET_KEY=your_secure_secret_key
 DATABASE_URL=sqlite:///./chat_database.db
 FRONTEND_URL=http://localhost:3001
 ```
 
-### API Keys Setup
+### Optional Configuration
+```bash
+PINECONE_ENDPOINT=your_pinecone_endpoint
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+LOG_LEVEL=INFO
+```
 
-1. **OpenAI API Key**:
-   - Visit https://platform.openai.com/api-keys
-   - Create new API key
-   - Add to `.env` file
-
-2. **Pinecone API Key**:
-   - Visit https://app.pinecone.io/
-   - Create account and get API key
-   - Add to `.env` file
-
-## 🧪 Testing
+## Testing
 
 ### Manual Testing
-1. Open http://localhost:3001
-2. Start a new chat
-3. Ask questions like:
-   - "How do I create an account?"
-   - "What are the transfer limits?"
-   - "How do I enable 2FA?"
+Test the application with these sample queries:
+- "How do I create an account?"
+- "What are the transfer limits?"
+- "How do I enable two-factor authentication?"
+- "What should I do if I suspect fraud?"
 
 ### API Testing
 ```bash
-# Test health endpoint
+# Health check
 curl http://localhost:8002/health
 
-# Test vector database setup
+# Vector database setup
 curl -X POST http://localhost:8002/api/admin/setup-vector-db
 
-# Test anonymous auth
+# Anonymous authentication
 curl -X POST http://localhost:8002/api/auth/anonymous
 ```
 
-## 🚀 Deployment
+## AWS Deployment
 
-### AWS Deployment Strategy
-
-#### Frontend (Vercel/Netlify)
-```bash
-cd eloquent-ai-frontend
-npm run build
-# Deploy to Vercel or Netlify
+### Production Architecture
 ```
-
-#### Backend (AWS Lambda/ECS)
-```bash
-cd eloquent-backend
-# Option 1: AWS Lambda with Mangum
-# Option 2: ECS/Fargate container
-# Option 3: EC2 with gunicorn + nginx
-```
-
-#### Database
-- **Development**: SQLite (included)
-- **Production**: PostgreSQL with connection pooling
-
-## 📈 Performance & Scalability
-
-### Current Performance
-- **Frontend**: Fast load times with Next.js optimization
-- **Backend**: Handles concurrent requests efficiently
-- **Database**: SQLite sufficient for moderate usage
-- **Vector Search**: Sub-second response times
-
-### Scaling Considerations
-- **Horizontal Scaling**: Stateless API design
-- **Database**: Easy PostgreSQL migration
-- **Caching**: Redis integration ready
-- **CDN**: Frontend can be distributed globally
-
-## 🛡️ Security Features
-
-### Implemented
-- JWT-based authentication
-- Secure secret key generation
-- CORS protection
-- SQL injection protection (SQLAlchemy ORM)
-- XSS protection (React sanitization)
-
-### Production Recommendations
-- Enable HTTPS
-- Add rate limiting
-- Implement request size limits
-- Set up monitoring and alerting
-- Add input validation
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **"Invalid API Key" errors**
-   - Verify OpenAI and Pinecone API keys in `.env`
-   - Check API key permissions
-
-2. **ModuleNotFoundError**
-   - Ensure virtual environment is activated
-   - Run `pip install -r requirements.txt`
-
-3. **CORS errors**
-   - Check frontend URL in backend configuration
-   - Verify CORS settings in `main.py`
-
-4. **Vector database setup fails**
-   - Verify Pinecone API key and environment
-   - Check network connectivity
-   - Run `python setup_vector_db.py` manually
-
-## 📝 Development Notes
-
-### Code Quality
-- **TypeScript**: Full type safety in frontend
-- **Python**: Type hints and proper error handling
-- **Linting**: ESLint for frontend, Python best practices
-- **Testing**: Ready for unit and integration tests
-
-### Software Engineering Practices
-- **Modular Architecture**: Clear separation of concerns
-- **Error Handling**: Comprehensive error management
-- **Logging**: Structured logging for debugging
-- **Documentation**: Extensive inline documentation
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🎯 Next Steps (V2 Features)
-
-- [ ] Real-time WebSocket updates
-- [ ] File upload and processing
-- [ ] Advanced analytics dashboard
-- [ ] Multi-language support
-- [ ] Voice input/output
-- [ ] Advanced admin panel
-- [ ] Rate limiting per user/IP
-- [ ] Comprehensive test suite
-- [ ] CI/CD pipeline
-- [ ] Docker containerization
-
----
-
-**🎉 Ready for Production!**
-
-This implementation demonstrates enterprise-grade software engineering practices with a production-ready RAG chatbot system. The modular architecture, comprehensive error handling, and scalable design make it suitable for immediate deployment and future expansion.
-
-## Features
-
-- **RAG-powered responses**: Retrieves relevant context from Pinecone vector database before generating answers
-- **Chat persistence**: Stores conversation history with support for both SQLite and DynamoDB
-- **User management**: Supports both anonymous and returning users with device-based identification
-- **Modern UI**: Clean, ChatGPT-inspired interface built with Next.js and TypeScript
-- **Production-ready**: Designed for AWS deployment with scalability in mind
-
-## Tech Stack
-
-### Backend
-- **FastAPI** (Python) - High-performance API framework
-- **OpenAI API** - LLM for response generation and embeddings
-- **Pinecone** - Vector database for semantic search
-- **SQLite/DynamoDB** - Chat persistence
-- **Mangum** - AWS Lambda adapter
-
-### Frontend
-- **Next.js** - React framework with TypeScript
-- **Tailwind CSS** - Utility-first CSS framework
-- **Axios** - HTTP client
-- **js-cookie** - Cookie management
-
-## Prerequisites
-
-- Python 3.9+
-- Node.js 18+
-- OpenAI API key
-- Pinecone API key (provided in assignment)
-- AWS account (for production deployment)
-
-## Local Development Setup
-
-### 1. Clone the repository
-```bash
-git clone <repository-url>
-cd AI-Engineer-Technical-Assignment
-```
-
-### 2. Backend Setup
-
-```bash
-# Navigate to API directory
-cd api
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Mac/Linux:
-source venv/bin/activate
-# On Windows:
-venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Create .env file
-cp .env.example .env
-# Edit .env and add your OpenAI API key
-```
-
-### 3. Seed Pinecone Database
-
-```bash
-# From project root
-cd scripts
-python seed_pinecone.py
-```
-
-This will embed and upload the fintech FAQ data to Pinecone.
-
-### 4. Start Backend Server
-
-```bash
-# From api directory
-uvicorn main:app --reload --port 8001
-```
-
-The API will be available at http://localhost:8001
-API documentation: http://localhost:8001/docs
-
-### 5. Frontend Setup
-
-```bash
-# In a new terminal, navigate to app directory
-cd app
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-The frontend will be available at http://localhost:3000
-
-## API Endpoints
-
-- `POST /api/chat` - Send a message and receive AI response
-- `GET /api/chats/{chat_id}` - Get chat history
-- `GET /api/chats` - List all chats for a user/device
-- `GET /health` - Health check endpoint
-
-## Architecture Overview
-
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Next.js    │────▶│   FastAPI    │────▶│   Pinecone   │
-│   Frontend   │     │   Backend    │     │Vector Search │
-└──────────────┘     └──────────────┘     └──────────────┘
-                            │
-                            ▼
-                     ┌──────────────┐
-                     │   OpenAI     │
-                     │     LLM      │
-                     └──────────────┘
-                            │
-                            ▼
-                     ┌──────────────┐
-                     │  SQLite/     │
-                     │  DynamoDB    │
-                     └──────────────┘
-```
-
-### RAG Pipeline
-
-1. User sends a query
-2. Query is embedded using OpenAI embeddings
-3. Semantic search in Pinecone retrieves relevant FAQ content
-4. Retrieved context + query sent to OpenAI LLM
-5. LLM generates response based only on provided context
-6. Response with citations returned to user
-
-## AWS Deployment Architecture
-
-### Infrastructure Design
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         CloudFront                          │
-│                    (Global CDN Distribution)                │
-└─────────────────────────────────────────────────────────────┘
-                               │
-        ┌──────────────────────┴──────────────────────┐
-        ▼                                              ▼
-┌──────────────────┐                        ┌──────────────────┐
-│   S3 Bucket      │                        │  API Gateway     │
-│ (Static Website) │                        │   (REST API)     │
-└──────────────────┘                        └──────────────────┘
-                                                      │
-                                                      ▼
-                                            ┌──────────────────┐
-                                            │  Lambda Function │
-                                            │    (FastAPI)     │
-                                            └──────────────────┘
-                                                      │
-                ┌─────────────────────────────────────┼─────────────────────────┐
-                ▼                                     ▼                         ▼
-        ┌──────────────────┐            ┌──────────────────┐        ┌──────────────────┐
-        │    DynamoDB      │            │    Pinecone      │        │     OpenAI       │
-        │  (Chat Storage)  │            │ (Vector Search)  │        │      API         │
-        └──────────────────┘            └──────────────────┘        └──────────────────┘
+CloudFront (CDN)
+    │
+    ├── S3 (Frontend Static Assets)
+    └── ALB → ECS Fargate (Backend API)
+                │
+                ├── RDS Aurora (Database)
+                ├── Pinecone (Vector Search)
+                └── Secrets Manager (API Keys)
 ```
 
 ### Deployment Components
+- **Frontend**: S3 static hosting with CloudFront CDN
+- **Backend**: ECS Fargate containers with auto-scaling
+- **Database**: RDS Aurora Serverless v2
+- **Vector Search**: Managed Pinecone service
+- **Security**: AWS Secrets Manager for API keys
 
-#### Frontend
-- **S3**: Static website hosting for Next.js build
-- **CloudFront**: CDN for global distribution and HTTPS
-- **Route 53**: DNS management (optional)
-
-#### Backend
-- **API Gateway**: RESTful API endpoint management
-- **Lambda**: Serverless compute for FastAPI via Mangum
-- **DynamoDB**: NoSQL database for chat persistence
-  - Partition Key: `chat_id`
-  - Sort Key: `timestamp`
-  - GSI: `user_id`, `device_id` for user queries
-
-#### Security & Configuration
-- **Secrets Manager**: Store API keys (OpenAI, Pinecone)
-- **IAM Roles**: Lambda execution role with DynamoDB access
-- **SSM Parameter Store**: Environment configuration
-
-### Deployment Steps
-
-#### 1. Build Frontend
-```bash
-cd app
-npm run build
-npm run export  # If using static export
-```
-
-#### 2. Deploy Frontend to S3
-```bash
-aws s3 sync out/ s3://your-bucket-name --delete
-aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
-```
-
-#### 3. Package Lambda Function
-```bash
-cd api
-pip install -r requirements.txt -t package/
-cp *.py package/
-cd package
-zip -r ../function.zip .
-```
-
-#### 4. Deploy Lambda
-```bash
-aws lambda create-function \
-  --function-name chatbot-api \
-  --runtime python3.9 \
-  --role arn:aws:iam::YOUR_ACCOUNT:role/lambda-role \
-  --handler main.handler \
-  --zip-file fileb://function.zip \
-  --timeout 30 \
-  --memory-size 512
-```
-
-#### 5. Configure API Gateway
-```bash
-# Create REST API
-# Configure Lambda proxy integration
-# Deploy to stage
-```
-
-### Environment Variables (Lambda)
-
-```
-OPENAI_API_KEY=<from Secrets Manager>
-PINECONE_API_KEY=<from Secrets Manager>
-USE_DYNAMODB=true
-DYNAMODB_TABLE_PREFIX=chatbot
-AWS_REGION=us-east-1
-```
-
-### Scaling Considerations
-
-1. **Lambda Concurrency**: Set reserved concurrency for consistent performance
-2. **DynamoDB Auto-scaling**: Configure read/write capacity auto-scaling
-3. **API Gateway Throttling**: Set rate limits to prevent abuse
-4. **CloudFront Caching**: Cache static assets aggressively
-5. **Pinecone**: Serverless, scales automatically
-
-### Monitoring & Logging
-
-- **CloudWatch Logs**: Lambda function logs
-- **X-Ray**: Distributed tracing for debugging
-- **CloudWatch Alarms**: Alert on errors, high latency
-- **DynamoDB Metrics**: Monitor capacity utilization
-
-## CI/CD Pipeline (GitHub Actions)
-
+### CI/CD Pipeline
 ```yaml
-name: Deploy
-
+# GitHub Actions workflow
+name: Deploy to AWS
 on:
   push:
     branches: [main]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Test Backend
-        run: |
-          cd api
-          pip install -r requirements.txt
-          pytest
-      - name: Test Frontend
-        run: |
-          cd app
-          npm install
-          npm test
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy Frontend to S3
-        # S3 sync commands
-      - name: Deploy Lambda
-        # Lambda update commands
+  deploy-frontend:
+    # Build and deploy Next.js to S3
+  deploy-backend:
+    # Build and deploy FastAPI to ECS
 ```
 
-## Architectural Decisions
+## Security
 
-### 1. RAG Implementation
-- **Pinecone** for vector search: Serverless, low latency, scalable
-- **OpenAI embeddings**: Industry standard, high quality
-- **Top-k retrieval**: Balance between context and relevance
+### Implemented Security Features
+- JWT-based authentication with secure token handling
+- CORS protection for cross-origin requests
+- SQL injection prevention through ORM
+- XSS protection via React sanitization
+- Secure secret key generation
+- Environment variable configuration for sensitive data
 
-### 2. Database Choice
-- **Development**: SQLite for simplicity
-- **Production**: DynamoDB for scalability and AWS integration
-- Abstracted database layer for easy switching
+### Production Security Recommendations
+- Enable HTTPS/TLS encryption
+- Implement rate limiting per user/IP
+- Add request size limits
+- Set up comprehensive monitoring and alerting
+- Use AWS WAF for additional protection
 
-### 3. User Management
-- **Device ID cookies**: Simple anonymous user tracking
-- **JWT ready**: Authentication structure in place for future
-- **Graceful degradation**: Works without cookies
+## Performance & Scalability
 
-### 4. Frontend Architecture
-- **Next.js**: SSR capabilities, excellent DX, production ready
-- **Component-based**: Reusable chat components
-- **Optimistic updates**: Better UX for message sending
+### Current Performance
+- Sub-second vector search response times
+- Efficient async request handling
+- Optimized database queries with indexes
+- Client-side caching and state management
 
-### 5. AWS Deployment
-- **Serverless**: Cost-effective, auto-scaling
-- **Managed services**: Reduce operational overhead
-- **Global distribution**: CloudFront for worldwide access
+### Scaling Strategy
+- Horizontal scaling through stateless API design
+- Database connection pooling
+- CDN distribution for global performance
+- Auto-scaling based on demand metrics
 
-## Trade-offs
+## Development Workflow
 
-1. **SQLite vs DynamoDB**: Simplicity vs scalability
-2. **Serverless vs Container**: Cost vs cold starts
-3. **Client-side state**: Simplicity vs offline capability
-4. **Rate limiting**: Not implemented for MVP simplicity
+### Code Structure
+```
+eloquent-ai-frontend/
+├── components/          # React UI components
+├── lib/                # API client and utilities
+├── store/              # Zustand state management
+├── types/              # TypeScript definitions
+└── app/                # Next.js app router
 
-## Future Enhancements
-
-1. **Authentication**: Full JWT implementation with user accounts
-2. **WebSocket**: Real-time streaming responses
-3. **Multi-language**: i18n support
-4. **Analytics**: Usage tracking and insights
-5. **Feedback loop**: User ratings for response quality
-6. **Caching layer**: Redis for frequently asked questions
-7. **Voice interface**: Speech-to-text integration
-
-## Testing
-
-### Backend Tests
-```bash
-cd api
-pytest tests/
+eloquent-backend/
+├── main.py             # FastAPI application
+├── rag_service.py      # RAG implementation
+├── auth_service.py     # Authentication logic
+├── models.py           # Database models
+└── requirements.txt    # Python dependencies
 ```
 
-### Frontend Tests
-```bash
-cd app
-npm test
-```
+### Development Best Practices
+- Comprehensive TypeScript coverage
+- Structured error handling and logging
+- Clean separation of concerns
+- Extensive inline documentation
+- Production-ready configuration management
 
-## License
+## Troubleshooting
 
-MIT
+### Common Issues
+1. **API Key Errors**: Verify keys are correctly set in .env files
+2. **Module Import Errors**: Ensure virtual environment is activated
+3. **CORS Issues**: Check frontend URL configuration in backend
+4. **Vector DB Setup**: Verify Pinecone connectivity and permissions
 
-## Support
-
-For issues or questions, please open a GitHub issue.
+### Debugging Tools
+- Backend logs: `uvicorn main:app --reload --log-level debug`
+- API documentation: http://localhost:8002/docs
+- Browser DevTools for frontend debugging
+- Database inspection via SQLite browser
