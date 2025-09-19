@@ -371,17 +371,3 @@ signal.signal(signal.SIGTERM, signal_handler)
 ```
 
 ---
-
-## 📞 Support & Escalation
-
-### Monitoring Alerts
-- **P1 (Critical)**: Site down, data loss risk
-- **P2 (High)**: Degraded performance, partial outage
-- **P3 (Medium)**: Non-critical errors
-- **P4 (Low)**: Minor issues
-
-### Escalation Path
-1. CloudWatch Alarm → SNS → PagerDuty
-2. On-call engineer responds (15 min SLA)
-3. Escalate to team lead if needed
-4. Post-mortem for P1/P2 incidents
